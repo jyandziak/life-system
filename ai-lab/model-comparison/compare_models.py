@@ -7,15 +7,25 @@ from openai import OpenAI
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-PROMPT = "Explain what an agentic AI workflow is in one paragraph."
-
 MODELS = [
     "gpt-4.1-mini",
     "gpt-4o-mini",
 ]
 
-OUTPUT_DIR = Path("ai-lab/model-comparison/results")
+BASE_DIR = Path("ai-lab/model-comparison")
+PROMPTS_PATH = BASE_DIR / "prompts.json"
+OUTPUT_DIR = BASE_DIR / "results"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def load_prompts(path: Path) -> list[str]:
+    with open(path, "r", encoding="utf-8") as f:
+        prompts = json.load(f)
+
+    if not isinstance(prompts, list) or not all(isinstance(p, str) for p in prompts):
+        raise ValueError("prompts.json must contain a JSON array of strings.")
+
+    return prompts
 
 
 def run_model(model: str, prompt: str) -> dict:
@@ -32,25 +42,33 @@ def run_model(model: str, prompt: str) -> dict:
 
 
 def main() -> None:
+    prompts = load_prompts(PROMPTS_PATH)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     results = []
 
-    for model in MODELS:
-        print("\n" + "=" * 40)
-        print(f"MODEL: {model}")
-        print("=" * 40)
+    for i, prompt in enumerate(prompts, start=1):
+        print("\n" + "#" * 60)
+        print(f"PROMPT {i}: {prompt}")
+        print("#" * 60)
 
-        result = run_model(model, PROMPT)
-        results.append(result)
+        for model in MODELS:
+            print("\n" + "=" * 40)
+            print(f"MODEL: {model}")
+            print("=" * 40)
 
-        print(result["response_text"])
-        print()
+            result = run_model(model, prompt)
+            results.append(result)
+
+            print(result["response_text"])
+            print()
 
     output_path = OUTPUT_DIR / f"comparison_{timestamp}.json"
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(
             {
                 "timestamp": timestamp,
+                "models": MODELS,
+                "prompts": prompts,
                 "results": results,
             },
             f,
