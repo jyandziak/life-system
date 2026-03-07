@@ -1,0 +1,15 @@
+{
+  "timestamp": "20260306_211045",
+  "results": [
+    {
+      "model": "gpt-4.1-mini",
+      "prompt": "Explain what an agentic AI workflow is in one paragraph.",
+      "response_text": "An agentic AI workflow refers to an autonomous system where artificial intelligence agents independently perform tasks, make decisions, and interact within a predefined environment to achieve specific goals. Unlike traditional AI models that require human intervention for each step, agentic AI workflows involve agents that can plan, adapt, and execute sequences of actions with minimal human oversight. These workflows often include components such as natural language understanding, decision-making algorithms, and feedback loops, enabling the AI to operate dynamically and proactively across complex tasks, such as data analysis, customer interaction, or automated problem-solving. This autonomy allows for increased efficiency, scalability, and responsiveness in various applications."
+    },
+    {
+      "model": "gpt-4o-mini",
+      "prompt": "Explain what an agentic AI workflow is in one paragraph.",
+      "response_text": "An agentic AI workflow refers to a structured process in which an artificial intelligence system autonomously performs tasks and makes decisions based on its programmed objectives and learned data, often with minimal human intervention. This workflow typically includes steps such as input processing, data analysis, action generation, and output delivery, enabling the AI to operate efficiently and adaptively. The concept emphasizes the AI’s ability to act as an independent agent, capable of managing complex tasks, learning from interactions, and continuously optimizing its performance to achieve desired outcomes."
+    }
+  ]
+}
